@@ -16,6 +16,10 @@ const userSchema = new schema(
       type: String,
       required: true,
     },
+    isProfileComplete: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

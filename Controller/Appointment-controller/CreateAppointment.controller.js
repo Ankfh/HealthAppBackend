@@ -1,3 +1,4 @@
+const sendEmail = require("../../helpers/sendEmail/sendEmail");
 const {
   createAppointment,
 } = require("../../services/AppointmentServices/createAppointment");
@@ -18,10 +19,10 @@ const CreateAppointmentController = async (req, res) => {
 
     // Fetch user details
     const userDetails = await getUserDetailsByUserId(userId);
-
     if (!userDetails) {
       return handleResponse(res, 404, "User details not found");
     }
+    console.log(userDetails.userId.email, "userDetails");
 
     // Prepare appointment data
     const appointmentData = {
@@ -33,6 +34,9 @@ const CreateAppointmentController = async (req, res) => {
       // Include other fields as necessary
     };
     const responseData = await createAppointment(appointmentData);
+    const emailSubject = "Appointment Confirmation";
+    const emailText = `Dear ${userDetails.name},\n\nYour appointment has been scheduled for ${date} at ${time}.\n\nReason: ${reason}\n\nThank you.`;
+    // await sendEmail(userDetails?.userId?.email, emailSubject, emailText);
     return handleResponse(
       res,
       201,
