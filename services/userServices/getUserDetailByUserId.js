@@ -9,7 +9,9 @@ const getUserDetailsByUserId = async (userId) => {
       throw new Error('Invalid user ID');
     }
 
-    const userDetails = await UserDetails.findOne({ userId }).exec();
+    const userDetails = await UserDetails.findOne({ userId })
+    .populate('userId') // Populate the userId field
+    .exec();
     if (!userDetails) {
       throw new Error('User details not found');
     }
